@@ -1,11 +1,9 @@
-import { useState } from 'react'
 import './App.css'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { PostIndex } from './pages/PostIndex/index'
+import { PostShow } from './pages/PostShow/index'
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
     <BrowserRouter>
       <header className="bg-[#333333] text-white">
@@ -19,6 +17,7 @@ function App() {
 
       <Routes>
         <Route path="/" element={<PostIndex />} />
+        <Route path="/posts/:id" element={<PostShow />} />
       </Routes>
     </BrowserRouter>
   )

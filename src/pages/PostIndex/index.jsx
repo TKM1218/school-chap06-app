@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { posts } from '../../data/posts';
 
 const formatDate = (iso) => {
@@ -18,41 +19,44 @@ export const PostIndex = () => {
 
         <div className="flex flex-col gap-8">
           {posts.map((post) => (
-            <article
-              key={post.id}
-              className="flex flex-col gap-6 border-b border-gray-200 pb-8 last:border-b-0 md:flex-row"
-            >
-              <div className="w-full shrink-0 md:w-[280px]">
-                <img src={post.thumbnailUrl}></img>
-              </div>
-
-              <div className="flex-1">
-                <div className="mb-2 flex flex-wrap items-center gap-3">
-                  <time className="text-sm font-medium text-gray-500">
-                    {formatDate(post.createdAt)}
-                  </time>
-
-                  <div className="flex gap-2">
-                    {post.categories.map((category) => (
-                      <span
-                        key={category}
-                        className="rounded-full bg-gray-200 px-3 py-1 text-xs font-medium text-gray-700"
-                      >
-                        {category}
-                      </span>
-                    ))}
-                  </div>
+            <Link key={post.id} to={`/posts/${post.id}`} className="block">
+              <article
+                key={post.id}
+                className="flex flex-col gap-6 border-b border-gray-200 pb-8 last:border-b-0 md:flex-row"
+              >
+                <div className="w-full shrink-0 md:w-[280px]">
+                  <img src={post.thumbnailUrl}></img>
                 </div>
 
-                <h2 className="mb-2 text-lg font-bold text-black md:text-xl">
-                  <div dangerouslySetInnerHTML={{__html: post.title}}></div>
-                </h2>
+                <div className="flex-1">
+                  <div className="mb-2 flex flex-wrap items-center gap-3">
+                    <time className="text-sm font-medium text-gray-500">
+                      {formatDate(post.createdAt)}
+                    </time>
 
-                <p className="text-sm leading-relaxed text-gray-600">
-                  <div dangerouslySetInnerHTML={{__html: post.content}}></div>
-                </p>
-              </div>
-            </article>
+                    <div className="flex gap-2">
+                      {post.categories.map((category) => (
+                        <span
+                          key={category}
+                          className="rounded-full bg-gray-200 px-3 py-1 text-xs font-medium text-gray-700"
+                        >
+                          {category}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  <h2 className="mb-2 text-lg font-bold text-black md:text-xl">
+                    <div dangerouslySetInnerHTML={{__html: post.title}}></div>
+                  </h2>
+
+                  <div
+                    className="text-sm leading-relaxed text-gray-600"
+                    dangerouslySetInnerHTML={{__html: post.content}}
+                  />
+                </div>
+              </article>
+            </Link>
           ))}
         </div>
       </main>
