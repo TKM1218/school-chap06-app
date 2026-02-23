@@ -14,6 +14,14 @@ export const PostShow = () => {
   const { id } = useParams();
   const post = posts.find((item) => item.id === Number(id));
 
+  if (!post) {
+    return (
+      <main>
+        <p className="text-xl font-bold md:text-2xl">記事が見つかりませんでした</p>
+      </main>
+    )
+  }
+
   return (
     <main className='mx-auto max-w-4xl px-4 py-10 text-gray-800'>
       <article>

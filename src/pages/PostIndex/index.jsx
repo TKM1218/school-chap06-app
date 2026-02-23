@@ -21,7 +21,6 @@ export const PostIndex = () => {
           {posts.map((post) => (
             <Link key={post.id} to={`/posts/${post.id}`} className="block">
               <article
-                key={post.id}
                 className="flex flex-col gap-6 border-b border-gray-200 pb-8 last:border-b-0 md:flex-row"
               >
                 <div className="w-full shrink-0 md:w-[280px]">
