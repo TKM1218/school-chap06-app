@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
-import { posts } from '../../data/posts';
+import { fetchPosts } from '../../api/posts'
+import { useEffect, useState } from 'react';
 
 const formatDate = (iso) => {
   if (!iso) return '';
@@ -11,6 +12,34 @@ const formatDate = (iso) => {
 };
 
 export const PostIndex = () => {
+const [posts, setPosts] = useState([]);
+const [isLoading, setIsLoading] = useState(true);
+const [error, setError] = useState('');
+
+  useEffect(() => {
+    let ignore = false;
+    const loadPosts = async () => {
+      try {
+        setIsLoading(true);
+        setError('');
+        const data = await fetchPosts();
+        if (!ignore) setPosts(data.posts);
+      } catch (e) {
+        if (!ignore) setError(e.message || 'エラーが発生しました');
+      } finally {
+        if (!ignore) setIsLoading(false);
+      }
+    };
+
+    loadPosts();
+    return () => {
+      ignore = true;
+    };
+  }, []);
+
+  if (isLoading) return <p className="px-4 py-10">読み込み中...</p>;
+  if (error) return <p className="px-4 py-10 text-red-600">{error}</p>;
+
   return (
     <div className="min-h-screen bg-white text-gray-800">
 

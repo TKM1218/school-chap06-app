@@ -1,5 +1,6 @@
 import { useParams } from 'react-router-dom';
-import { posts } from '../../data/posts';
+import { fetchPostById } from '../../api/posts';
+import { useEffect, useState } from 'react';
 
 const formatDate = (iso) => {
   if (!iso) return '';
@@ -12,18 +13,38 @@ const formatDate = (iso) => {
 
 export const PostShow = () => {
   const { id } = useParams();
-  const post = posts.find((item) => item.id === Number(id));
+  const [post, setPost] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState('');
 
-  if (!post) {
-    return (
-      <main>
-        <p className="text-xl font-bold md:text-2xl">記事が見つかりませんでした</p>
-      </main>
-    )
-  }
+  useEffect(() => {
+    let ignore = false;
+
+    const loadPost = async () => {
+      try {
+        setIsLoading(true);
+        setError('');
+        const data = await fetchPostById(id);
+        if (!ignore) setPost(data.posts);
+      } catch (e) {
+        if (!ignore) setError(e.message || 'エラーが発生しました');
+      } finally {
+        if (!ignore) setIsLoading(false);
+      }
+    };
+
+    loadPost();
+    return () => {
+      ignore = true;
+    };
+  }, [id]);
+
+  if (isLoading) return <p className="px-4 py-10">読み込み中...</p>;
+  if (error) return <p className="px-4 py-10 text-red-600">{error}</p>;
+
 
   return (
-    <main className='mx-auto max-w-4xl px-4 py-10 text-gray-800'>
+    <main className="mx-auto max-w-4xl px-4 py-10 text-gray-800">
       <article>
         <img
           src={post.thumbnailUrl}
