@@ -25,7 +25,7 @@ export const PostShow = () => {
         setIsLoading(true);
         setError('');
         const data = await fetchPostById(id);
-        if (!ignore) setPost(data.posts);
+        if (!ignore) setPost(data.post);
       } catch (e) {
         if (!ignore) setError(e.message || 'エラーが発生しました');
       } finally {
@@ -42,15 +42,10 @@ export const PostShow = () => {
   if (isLoading) return <p className="px-4 py-10">読み込み中...</p>;
   if (error) return <p className="px-4 py-10 text-red-600">{error}</p>;
 
-
   return (
     <main className="mx-auto max-w-4xl px-4 py-10 text-gray-800">
       <article>
-        <img
-          src={post.thumbnailUrl}
-          alt={post.title}
-          className="mb-4 w-full"
-        />
+        <img src={post.thumbnailUrl} alt={post.title} className="mb-4 w-full" />
 
         <div className="mb-4 flex flex-wrap items-center gap-3">
           <time className="text-sm font-medium text-gray-500">
@@ -70,12 +65,12 @@ export const PostShow = () => {
         </div>
 
         <h1 className="mb-6 font-bold text-black md:text-3xl">
-          <div dangerouslySetInnerHTML={{__html: post.title}}></div>
+          <div dangerouslySetInnerHTML={{ __html: post.title }}></div>
         </h1>
 
         <div
           className="leading-relaxed text-gray-600"
-          dangerouslySetInnerHTML={{__html: post.content}}
+          dangerouslySetInnerHTML={{ __html: post.content }}
         />
       </article>
     </main>
