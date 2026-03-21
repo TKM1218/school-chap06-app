@@ -1,7 +1,7 @@
-import './App.css'
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import { PostIndex } from './pages/PostIndex/index'
-import { PostShow } from './pages/PostShow/index'
+import './App.css';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { PostIndex } from './pages/PostIndex/index';
+import { PostShow } from './pages/PostShow/index';
 
 function App() {
   return (
@@ -20,7 +20,7 @@ function App() {
         <Route path="/posts/:id" element={<PostShow />} />
       </Routes>
     </BrowserRouter>
-  )
+  );
 }
 
-export default App
+export default App;

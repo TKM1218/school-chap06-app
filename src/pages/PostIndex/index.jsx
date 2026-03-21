@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { fetchPosts } from '../../api/posts'
+import { fetchPosts } from '../../api/posts';
 import { useEffect, useState } from 'react';
 
 const formatDate = (iso) => {
@@ -12,9 +12,9 @@ const formatDate = (iso) => {
 };
 
 export const PostIndex = () => {
-const [posts, setPosts] = useState([]);
-const [isLoading, setIsLoading] = useState(true);
-const [error, setError] = useState('');
+  const [posts, setPosts] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState('');
 
   useEffect(() => {
     let ignore = false;
@@ -42,16 +42,13 @@ const [error, setError] = useState('');
 
   return (
     <div className="min-h-screen bg-white text-gray-800">
-
       <main className="mx-auto max-w-4xl px-4 py-10">
         <h1 className="mb-8 text-xl font-bold">記事一覧</h1>
 
         <div className="flex flex-col gap-8">
           {posts.map((post) => (
             <Link key={post.id} to={`/posts/${post.id}`} className="block">
-              <article
-                className="flex flex-col gap-6 border-b border-gray-200 pb-8 last:border-b-0 md:flex-row"
-              >
+              <article className="flex flex-col gap-6 border-b border-gray-200 pb-8 last:border-b-0 md:flex-row">
                 <div className="w-full shrink-0 md:w-[280px]">
                   <img src={post.thumbnailUrl}></img>
                 </div>
@@ -75,12 +72,12 @@ const [error, setError] = useState('');
                   </div>
 
                   <h2 className="mb-2 text-lg font-bold text-black md:text-xl">
-                    <div dangerouslySetInnerHTML={{__html: post.title}}></div>
+                    <div dangerouslySetInnerHTML={{ __html: post.title }}></div>
                   </h2>
 
                   <div
                     className="text-sm leading-relaxed text-gray-600"
-                    dangerouslySetInnerHTML={{__html: post.content}}
+                    dangerouslySetInnerHTML={{ __html: post.content }}
                   />
                 </div>
               </article>
