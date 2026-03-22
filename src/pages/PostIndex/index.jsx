@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
-import { posts } from '../../data/posts';
+import { fetchPosts } from '../../api/posts';
+import { useEffect, useState } from 'react';
 
 const formatDate = (iso) => {
   if (!iso) return '';
@@ -11,18 +12,45 @@ const formatDate = (iso) => {
 };
 
 export const PostIndex = () => {
+  const [posts, setPosts] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState('');
+
+  useEffect(() => {
+    let ignore = false;
+    const loadPosts = async () => {
+      try {
+        setIsLoading(true);
+        setError('');
+        const data = await fetchPosts();
+        if (!ignore) setPosts(data.posts);
+      } catch (e) {
+        if (!ignore) setError(e.message || 'エラーが発生しました');
+      } finally {
+        if (!ignore) setIsLoading(false);
+      }
+    };
+
+    loadPosts();
+    return () => {
+      ignore = true;
+    };
+  }, []);
+
+  if (isLoading) return <p className="px-4 py-10">読み込み中...</p>;
+  if (error) return <p className="px-4 py-10 text-red-600">{error}</p>;
+  if (posts.length === 0)
+    return <p className="px-4 py-10 text-gray-800">記事が見つかりません</p>;
+
   return (
     <div className="min-h-screen bg-white text-gray-800">
-
       <main className="mx-auto max-w-4xl px-4 py-10">
         <h1 className="mb-8 text-xl font-bold">記事一覧</h1>
 
         <div className="flex flex-col gap-8">
           {posts.map((post) => (
             <Link key={post.id} to={`/posts/${post.id}`} className="block">
-              <article
-                className="flex flex-col gap-6 border-b border-gray-200 pb-8 last:border-b-0 md:flex-row"
-              >
+              <article className="flex flex-col gap-6 border-b border-gray-200 pb-8 last:border-b-0 md:flex-row">
                 <div className="w-full shrink-0 md:w-[280px]">
                   <img src={post.thumbnailUrl}></img>
                 </div>
@@ -46,12 +74,12 @@ export const PostIndex = () => {
                   </div>
 
                   <h2 className="mb-2 text-lg font-bold text-black md:text-xl">
-                    <div dangerouslySetInnerHTML={{__html: post.title}}></div>
+                    <div dangerouslySetInnerHTML={{ __html: post.title }}></div>
                   </h2>
 
                   <div
                     className="text-sm leading-relaxed text-gray-600"
-                    dangerouslySetInnerHTML={{__html: post.content}}
+                    dangerouslySetInnerHTML={{ __html: post.content }}
                   />
                 </div>
               </article>
