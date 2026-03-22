@@ -41,6 +41,8 @@ export const PostShow = () => {
 
   if (isLoading) return <p className="px-4 py-10">読み込み中...</p>;
   if (error) return <p className="px-4 py-10 text-red-600">{error}</p>;
+  if (!post)
+    return <p className="px-4 py-10 text-gray-800">記事が見つかりません</p>;
 
   return (
     <main className="mx-auto max-w-4xl px-4 py-10 text-gray-800">

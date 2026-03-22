@@ -39,6 +39,8 @@ export const PostIndex = () => {
 
   if (isLoading) return <p className="px-4 py-10">読み込み中...</p>;
   if (error) return <p className="px-4 py-10 text-red-600">{error}</p>;
+  if (!posts)
+    return <p className="px-4 py-10 text-gray-800">記事が見つかりません</p>;
 
   return (
     <div className="min-h-screen bg-white text-gray-800">
