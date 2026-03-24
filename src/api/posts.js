@@ -12,3 +12,15 @@ export const fetchPostById = async (id) => {
   if (!response.ok) throw new Error('記事詳細の取得に失敗しました');
   return response.json();
 };
+
+export const sendContact = async (payload) => {
+  const response = await fetch(`${API_BASE_URL}/contacts`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload),
+  });
+  if (!response.ok) {
+    throw new Error('送信に失敗しました');
+  }
+  return response.json();
+};
