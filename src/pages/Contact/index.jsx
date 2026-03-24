@@ -81,6 +81,11 @@ export const Contact = () => {
       email: '',
       message: '',
     });
+    setErrors({
+      name: '',
+      email: '',
+      message: '',
+    });
   };
 
   return (
@@ -104,7 +109,7 @@ export const Contact = () => {
             maxLength={30}
             disabled={isSubmitting}
             className="w-full rounded-md border border-gray-300 px-3 py-2 outline-none focus:border-gray-500"
-          ></input>
+          />
           {errors.name && (
             <p className="mt-1 text-sm text-red-600">{errors.name}</p>
           )}
@@ -126,9 +131,9 @@ export const Contact = () => {
             required
             disabled={isSubmitting}
             className="w-full rounded-md border border-gray-300 px-3 py-2 outline-none focus:border-gray-500"
-          ></input>
+          />
           {errors.email && (
-            <p className="px-4 py-10 text-red-600">{errors.message}</p>
+            <p className="px-4 py-10 text-red-600">{errors.email}</p>
           )}
         </div>
 
