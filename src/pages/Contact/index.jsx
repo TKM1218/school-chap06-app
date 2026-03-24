@@ -183,5 +183,3 @@ export const Contact = () => {
     </main>
   );
 };
-
-// 完成！！pushしてレビュー依頼出す！
